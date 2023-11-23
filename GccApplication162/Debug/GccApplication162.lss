@@ -1,0 +1,398 @@
+
+GccApplication162.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000001d2  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000246  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000006  00800060  00800060  00000246  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000246  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000278  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000038  00000000  00000000  000002b4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000899  00000000  00000000  000002ec  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000628  00000000  00000000  00000b85  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000429  00000000  00000000  000011ad  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000064  00000000  00000000  000015d8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000003dd  00000000  00000000  0000163c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000018e  00000000  00000000  00001a19  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000040  00000000  00000000  00001ba7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 53 00 	jmp	0xa6	; 0xa6 <__vector_13>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a6 36       	cpi	r26, 0x66	; 102
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 7a 00 	call	0xf4	; 0xf4 <main>
+  74:	0c 94 e7 00 	jmp	0x1ce	; 0x1ce <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <_Z10usart_initj>:
+#include <util/delay.h>
+#include <avr/sfr_defs.h>
+
+void usart_init(unsigned int speed)
+{
+	UBRRH=(unsigned char)(speed>>8);
+  7c:	90 bd       	out	0x20, r25	; 32
+	UBRRL=(unsigned char) speed;
+  7e:	89 b9       	out	0x09, r24	; 9
+	UCSRA=0x00;
+  80:	1b b8       	out	0x0b, r1	; 11
+	UCSRB|=(1<<RXEN)|(1<<TXEN);
+  82:	8a b1       	in	r24, 0x0a	; 10
+  84:	88 61       	ori	r24, 0x18	; 24
+  86:	8a b9       	out	0x0a, r24	; 10
+	UCSRB|=(1<<RXCIE);
+  88:	57 9a       	sbi	0x0a, 7	; 10
+	UCSRC=(1<<URSEL)|(1<<UCSZ1)|(1<<UCSZ0);
+  8a:	86 e8       	ldi	r24, 0x86	; 134
+  8c:	80 bd       	out	0x20, r24	; 32
+  8e:	08 95       	ret
+
+00000090 <_Z8InitPortv>:
+}
+
+void InitPort(void)
+{
+	UDR = 'b';
+  90:	82 e6       	ldi	r24, 0x62	; 98
+  92:	8c b9       	out	0x0c, r24	; 12
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  94:	8f ec       	ldi	r24, 0xCF	; 207
+  96:	97 e0       	ldi	r25, 0x07	; 7
+  98:	01 97       	sbiw	r24, 0x01	; 1
+  9a:	f1 f7       	brne	.-4      	; 0x98 <_Z8InitPortv+0x8>
+  9c:	00 c0       	rjmp	.+0      	; 0x9e <_Z8InitPortv+0xe>
+  9e:	00 00       	nop
+	_delay_ms(1);
+	UDR = 'd';
+  a0:	84 e6       	ldi	r24, 0x64	; 100
+  a2:	8c b9       	out	0x0c, r24	; 12
+  a4:	08 95       	ret
+
+000000a6 <__vector_13>:
+
+bool To_Interface = false; 
+bool InterfaceCounter = false;
+
+ISR(USART_RXC_vect)
+{
+  a6:	1f 92       	push	r1
+  a8:	0f 92       	push	r0
+  aa:	0f b6       	in	r0, 0x3f	; 63
+  ac:	0f 92       	push	r0
+  ae:	11 24       	eor	r1, r1
+  b0:	8f 93       	push	r24
+	Data = UDR;
+  b2:	8c b1       	in	r24, 0x0c	; 12
+  b4:	80 93 65 00 	sts	0x0065, r24	; 0x800065 <Data>
+	switch(Data)
+  b8:	81 36       	cpi	r24, 0x61	; 97
+  ba:	29 f0       	breq	.+10     	; 0xc6 <__vector_13+0x20>
+  bc:	82 36       	cpi	r24, 0x62	; 98
+  be:	49 f0       	breq	.+18     	; 0xd2 <__vector_13+0x2c>
+  c0:	83 35       	cpi	r24, 0x53	; 83
+  c2:	91 f4       	brne	.+36     	; 0xe8 <__vector_13+0x42>
+  c4:	0c c0       	rjmp	.+24     	; 0xde <__vector_13+0x38>
+	{
+		case 'a':
+		IN_0_SW_ON = true;
+  c6:	81 e0       	ldi	r24, 0x01	; 1
+  c8:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <IN_0_SW_ON>
+		InterruptCounter = true;
+  cc:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <InterruptCounter>
+		break;
+  d0:	0b c0       	rjmp	.+22     	; 0xe8 <__vector_13+0x42>
+		case 'b':
+		OUT_0_SW_ON = true;
+  d2:	81 e0       	ldi	r24, 0x01	; 1
+  d4:	80 93 63 00 	sts	0x0063, r24	; 0x800063 <OUT_0_SW_ON>
+		InterruptCounter = true;		
+  d8:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <InterruptCounter>
+		break;
+  dc:	05 c0       	rjmp	.+10     	; 0xe8 <__vector_13+0x42>
+		case 'S':
+		To_Interface = true;
+  de:	81 e0       	ldi	r24, 0x01	; 1
+  e0:	80 93 61 00 	sts	0x0061, r24	; 0x800061 <To_Interface>
+		InterfaceCounter = true;
+  e4:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <_edata>
+		break;
+	}
+}
+  e8:	8f 91       	pop	r24
+  ea:	0f 90       	pop	r0
+  ec:	0f be       	out	0x3f, r0	; 63
+  ee:	0f 90       	pop	r0
+  f0:	1f 90       	pop	r1
+  f2:	18 95       	reti
+
+000000f4 <main>:
+
+int main(void)
+{
+	DDRA = 0xFF;
+  f4:	8f ef       	ldi	r24, 0xFF	; 255
+  f6:	8a bb       	out	0x1a, r24	; 26
+	DDRB = 0xFF;
+  f8:	87 bb       	out	0x17, r24	; 23
+	DDRC = 0x00;
+  fa:	14 ba       	out	0x14, r1	; 20
+	PORTA |= (1<<PA0);
+  fc:	d8 9a       	sbi	0x1b, 0	; 27
+	PORTB |= (1<<PB0);
+  fe:	c0 9a       	sbi	0x18, 0	; 24
+
+	usart_init(UBRR_VAL);
+ 100:	83 e3       	ldi	r24, 0x33	; 51
+ 102:	90 e0       	ldi	r25, 0x00	; 0
+ 104:	0e 94 3e 00 	call	0x7c	; 0x7c <_Z10usart_initj>
+	InitPort();
+ 108:	0e 94 48 00 	call	0x90	; 0x90 <_Z8InitPortv>
+	sei();	
+ 10c:	78 94       	sei
+    while(1)
+    {
+		_delay_ms(1);
+		if (InterfaceCounter)
+		{
+			DDRA = 0xFF;
+ 10e:	cf ef       	ldi	r28, 0xFF	; 255
+				}
+				_delay_ms(1);
+				if (bit_is_set(PINC, PINC1))
+				{
+					PORTB |= (1<<PB1);
+					UDR = 'c';					
+ 110:	0f 2e       	mov	r0, r31
+ 112:	f3 e6       	ldi	r31, 0x63	; 99
+ 114:	ff 2e       	mov	r15, r31
+ 116:	f0 2d       	mov	r31, r0
+				PORTA |= (1<<PA1);				
+				PORTB &= ~(1<<PB0);
+				_delay_ms(1);				
+				if (bit_is_clear(PINC, PINC0))
+				{
+					UDR = 'a';					
+ 118:	01 e6       	ldi	r16, 0x61	; 97
+				}
+				_delay_ms(1);
+				if (bit_is_clear(PINC, PINC1))
+				{
+					PORTB &= ~(1<<PB1);
+					UDR = 'd';
+ 11a:	14 e6       	ldi	r17, 0x64	; 100
+				PORTA |= (1<<PA0);
+				PORTA &= ~(1<<PA1);
+				_delay_ms(1);				
+				if (bit_is_set(PINC, PINC0))
+				{
+					UDR = 'b';
+ 11c:	d2 e6       	ldi	r29, 0x62	; 98
+ 11e:	8f ec       	ldi	r24, 0xCF	; 207
+ 120:	97 e0       	ldi	r25, 0x07	; 7
+ 122:	01 97       	sbiw	r24, 0x01	; 1
+ 124:	f1 f7       	brne	.-4      	; 0x122 <main+0x2e>
+ 126:	00 c0       	rjmp	.+0      	; 0x128 <main+0x34>
+ 128:	00 00       	nop
+	InitPort();
+	sei();	
+    while(1)
+    {
+		_delay_ms(1);
+		if (InterfaceCounter)
+ 12a:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 12e:	88 23       	and	r24, r24
+ 130:	51 f0       	breq	.+20     	; 0x146 <main+0x52>
+		{
+			DDRA = 0xFF;
+ 132:	ca bb       	out	0x1a, r28	; 26
+			DDRB = 0xFF;
+ 134:	c7 bb       	out	0x17, r28	; 23
+			DDRC = 0x00;
+ 136:	14 ba       	out	0x14, r1	; 20
+			PORTA |= (1<<PA0);
+ 138:	d8 9a       	sbi	0x1b, 0	; 27
+			PORTB |= (1<<PB0);
+ 13a:	c0 9a       	sbi	0x18, 0	; 24
+			PORTB &= ~(1<<PB1);
+ 13c:	c1 98       	cbi	0x18, 1	; 24
+			bool IN_0_SW_ON = false;
+			bool OUT_0_SW_ON = false;
+			bool InterruptCounter = false;					
+			InitPort();				
+ 13e:	0e 94 48 00 	call	0x90	; 0x90 <_Z8InitPortv>
+			InterfaceCounter = false;	
+ 142:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <_edata>
+ 146:	8f ec       	ldi	r24, 0xCF	; 207
+ 148:	97 e0       	ldi	r25, 0x07	; 7
+ 14a:	01 97       	sbiw	r24, 0x01	; 1
+ 14c:	f1 f7       	brne	.-4      	; 0x14a <main+0x56>
+ 14e:	00 c0       	rjmp	.+0      	; 0x150 <main+0x5c>
+ 150:	00 00       	nop
+		}				
+		_delay_ms(1);
+		if (InterruptCounter)
+ 152:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <InterruptCounter>
+ 156:	88 23       	and	r24, r24
+ 158:	11 f3       	breq	.-60     	; 0x11e <main+0x2a>
+		{
+			if (IN_0_SW_ON)
+ 15a:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <IN_0_SW_ON>
+ 15e:	88 23       	and	r24, r24
+ 160:	b9 f0       	breq	.+46     	; 0x190 <main+0x9c>
+			{
+				PORTA &= ~(1<<PA0);
+ 162:	d8 98       	cbi	0x1b, 0	; 27
+				PORTA |= (1<<PA1);				
+ 164:	d9 9a       	sbi	0x1b, 1	; 27
+				PORTB &= ~(1<<PB0);
+ 166:	c0 98       	cbi	0x18, 0	; 24
+ 168:	8f ec       	ldi	r24, 0xCF	; 207
+ 16a:	97 e0       	ldi	r25, 0x07	; 7
+ 16c:	01 97       	sbiw	r24, 0x01	; 1
+ 16e:	f1 f7       	brne	.-4      	; 0x16c <main+0x78>
+ 170:	00 c0       	rjmp	.+0      	; 0x172 <main+0x7e>
+ 172:	00 00       	nop
+				_delay_ms(1);				
+				if (bit_is_clear(PINC, PINC0))
+ 174:	98 9b       	sbis	0x13, 0	; 19
+				{
+					UDR = 'a';					
+ 176:	0c b9       	out	0x0c, r16	; 12
+ 178:	8f ec       	ldi	r24, 0xCF	; 207
+ 17a:	97 e0       	ldi	r25, 0x07	; 7
+ 17c:	01 97       	sbiw	r24, 0x01	; 1
+ 17e:	f1 f7       	brne	.-4      	; 0x17c <main+0x88>
+ 180:	00 c0       	rjmp	.+0      	; 0x182 <main+0x8e>
+ 182:	00 00       	nop
+				}
+				_delay_ms(1);
+				if (bit_is_set(PINC, PINC1))
+ 184:	99 9b       	sbis	0x13, 1	; 19
+ 186:	02 c0       	rjmp	.+4      	; 0x18c <main+0x98>
+				{
+					PORTB |= (1<<PB1);
+ 188:	c1 9a       	sbi	0x18, 1	; 24
+					UDR = 'c';					
+ 18a:	fc b8       	out	0x0c, r15	; 12
+				}
+				IN_0_SW_ON = false;
+ 18c:	10 92 64 00 	sts	0x0064, r1	; 0x800064 <IN_0_SW_ON>
+			}
+			if (OUT_0_SW_ON)
+ 190:	80 91 63 00 	lds	r24, 0x0063	; 0x800063 <OUT_0_SW_ON>
+ 194:	88 23       	and	r24, r24
+ 196:	c1 f0       	breq	.+48     	; 0x1c8 <main+0xd4>
+			{
+				PORTB |= (1<<PB0);
+ 198:	c0 9a       	sbi	0x18, 0	; 24
+				PORTB &= ~(1<<PB1);
+ 19a:	c1 98       	cbi	0x18, 1	; 24
+				PORTA |= (1<<PA0);
+ 19c:	d8 9a       	sbi	0x1b, 0	; 27
+				PORTA &= ~(1<<PA1);
+ 19e:	d9 98       	cbi	0x1b, 1	; 27
+ 1a0:	8f ec       	ldi	r24, 0xCF	; 207
+ 1a2:	97 e0       	ldi	r25, 0x07	; 7
+ 1a4:	01 97       	sbiw	r24, 0x01	; 1
+ 1a6:	f1 f7       	brne	.-4      	; 0x1a4 <main+0xb0>
+ 1a8:	00 c0       	rjmp	.+0      	; 0x1aa <main+0xb6>
+ 1aa:	00 00       	nop
+				_delay_ms(1);				
+				if (bit_is_set(PINC, PINC0))
+ 1ac:	98 99       	sbic	0x13, 0	; 19
+				{
+					UDR = 'b';
+ 1ae:	dc b9       	out	0x0c, r29	; 12
+ 1b0:	8f ec       	ldi	r24, 0xCF	; 207
+ 1b2:	97 e0       	ldi	r25, 0x07	; 7
+ 1b4:	01 97       	sbiw	r24, 0x01	; 1
+ 1b6:	f1 f7       	brne	.-4      	; 0x1b4 <main+0xc0>
+ 1b8:	00 c0       	rjmp	.+0      	; 0x1ba <main+0xc6>
+ 1ba:	00 00       	nop
+				}
+				_delay_ms(1);
+				if (bit_is_clear(PINC, PINC1))
+ 1bc:	99 99       	sbic	0x13, 1	; 19
+ 1be:	02 c0       	rjmp	.+4      	; 0x1c4 <main+0xd0>
+				{
+					PORTB &= ~(1<<PB1);
+ 1c0:	c1 98       	cbi	0x18, 1	; 24
+					UDR = 'd';
+ 1c2:	1c b9       	out	0x0c, r17	; 12
+				}
+										
+				OUT_0_SW_ON = false;
+ 1c4:	10 92 63 00 	sts	0x0063, r1	; 0x800063 <OUT_0_SW_ON>
+			}
+			InterruptCounter = false;
+ 1c8:	10 92 62 00 	sts	0x0062, r1	; 0x800062 <InterruptCounter>
+ 1cc:	a8 cf       	rjmp	.-176    	; 0x11e <main+0x2a>
+
+000001ce <_exit>:
+ 1ce:	f8 94       	cli
+
+000001d0 <__stop_program>:
+ 1d0:	ff cf       	rjmp	.-2      	; 0x1d0 <__stop_program>
